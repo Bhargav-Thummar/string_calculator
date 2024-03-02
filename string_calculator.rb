@@ -16,6 +16,17 @@ class StringCalculator
     args.compact!
 
     raise NilInputError if args.empty?
+
+    result = []
+    args.each do |ele|
+      result << 
+        ele
+          .split(',')
+          .map(&:to_i)
+          .sum
+    end
+
+    result
   end
 end
 
