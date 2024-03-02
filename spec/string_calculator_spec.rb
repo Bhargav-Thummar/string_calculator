@@ -20,6 +20,12 @@ describe StringCalculator do
         expect(string_calculator.add("", nil, "")).to match_array([0, 0])
       end
     end
+
+    context 'with nil, empty strings, numbers' do
+      it 'should return sum of elements in each array element' do
+        expect(string_calculator.add("1", "", nil, "1, 2, 3", "", " ")).to match_array([1, 0, 6, 0, 0])
+      end
+    end
   end
 end
 
