@@ -1,1 +1,2 @@
+class NilInputError < StandardError; end
 
