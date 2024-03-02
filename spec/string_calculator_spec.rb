@@ -7,9 +7,17 @@ describe StringCalculator do
 
     context '#NilInputError' do
       it 'should raise NilInputError for nil' do
-        expect { 
-          string_calculator.add(nil) 
-        }.to raise_error(NilInputError)
+        expect { string_calculator.add(nil) }.to raise_error(NilInputError)
+      end
+    end
+
+    context 'empty string' do
+      it 'should include 0 in output' do
+        expect(string_calculator.add("")).to include(0)
+      end
+
+      it 'should include 0 in output' do
+        expect(string_calculator.add("", nil, "")).to match_array([0, 0])
       end
     end
   end
