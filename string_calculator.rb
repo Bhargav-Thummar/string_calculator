@@ -12,6 +12,10 @@ require './dependencies'
 
 class StringCalculator
   def add(*args)
+    # remove nil from array
+    args.compact!
+
+    raise NilInputError if args.empty?
   end
 end
 
