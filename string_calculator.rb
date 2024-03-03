@@ -18,9 +18,17 @@ class StringCalculator
     raise NilInputError if args.empty?
 
     result = []
-
+    regex_for_delimiter = /^\/\/(.|@|#|$|%|;|:|<|>|!)\n.*/
+    
     args.each do |ele|
       if ele.match?(/(\n)/)
+        # set delimiter
+        if ele.match?(regex_for_delimiter)
+          delimiter = ele[2]
+          ele.gsub!("//#{delimiter}\n", '')
+          ele.gsub!(delimiter, ",")
+        end
+
         ele
           .split(",")
           .each do |sub_ele|
