@@ -36,6 +36,12 @@ describe StringCalculator do
         expect(string_calculator.add("1", "", nil, "1\n2, 3,4", "\n, 1, \n", "", " ", "\n", "1\n3")).to match_array([1, 0, 10, 0, 0, 4])
       end
     end
+
+    context 'with changed delimiter' do
+      it 'a delimiter should be treated as comma and return sum of elements in each array element if line looks like //[delimiter]\n[numbers…]' do
+        expect(string_calculator.add("1", "//!\n1!2!3", "", nil, "1\n2, 3,4", "\n, 1, \n", "//;\n1;2")).to match_array([1, 6, 0, 10, 3])
+      end
+    end
   end
 end
 
