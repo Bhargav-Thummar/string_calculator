@@ -18,12 +18,30 @@ class StringCalculator
     raise NilInputError if args.empty?
 
     result = []
+
     args.each do |ele|
-      result << 
+      if ele.match?(/(\n)/)
         ele
-          .split(',')
-          .map(&:to_i)
-          .sum
+          .split(",")
+          .each do |sub_ele|
+            if sub_ele.match?(/^((\d+)\n(\d+))$/)
+              ele.gsub!("\n", ",")
+            elsif sub_ele.match?(/(\n)/)
+              ele = "invalid"
+            end
+            break
+          end
+      else
+        ele
+      end
+
+      next if ele == "invalid"
+
+      result <<
+        ele
+        .split(',')
+        .map(&:to_i)
+        .sum
     end
 
     result
