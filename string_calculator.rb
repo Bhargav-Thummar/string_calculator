@@ -15,6 +15,7 @@ class StringCalculator
     # remove nil from array
     args.compact!
 
+    # to raise error for nil input
     raise NilInputError if args.empty?
 
     result = []
@@ -23,6 +24,7 @@ class StringCalculator
     regex_for_negative_numbers = /-/
 
     args.each do |ele|
+
       if ele.match?(/(\n)/)
         # set delimiter
         if ele.match?(regex_for_delimiter)
@@ -31,6 +33,7 @@ class StringCalculator
           ele.gsub!(delimiter, ",")
         end
 
+        # replace delimiter with , after validating element
         ele
           .split(",")
           .each do |sub_ele|
@@ -47,10 +50,15 @@ class StringCalculator
 
       next if ele == "invalid"
 
+      # to raise error for alphabatic charaters
+      raise InvalidInputError if ele.match?(/^[A-Za-z]+$/)
+
+      # to capture negative numbers
       if ele.match?(regex_for_negative_numbers)
         ele.split(",").each { |sub_ele| negatives_or_alphabets_elements << sub_ele if sub_ele.to_i < 0 }
       end
 
+      # resposible for sum of elements
       result <<
         ele
         .split(',')
@@ -58,6 +66,7 @@ class StringCalculator
         .sum
     end
 
+    # to raise error for negative numbers
     raise NegativeNumberError, negatives_or_alphabets_elements unless negatives_or_alphabets_elements.empty?
 
     result
