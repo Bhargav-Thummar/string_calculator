@@ -26,6 +26,16 @@ describe StringCalculator do
         expect(string_calculator.add("1", "", nil, "1, 2, 3", "", " ")).to match_array([1, 0, 6, 0, 0])
       end
     end
+
+    context 'with new line (\n)' do
+      it 'should be treated as comma and return sum of elements in each array element if \n is surrounded by digits' do
+        expect(string_calculator.add("1", "", nil, "1\n2, 3", "", " ")).to match_array([1, 0, 6, 0, 0])
+      end
+   
+      it 'should be treated as invalid input if it is not surrounded by digits and return sum of elements in each array element, ingoring invaild input argument' do
+        expect(string_calculator.add("1", "", nil, "1\n2, 3,4", "\n, 1, \n", "", " ", "\n", "1\n3")).to match_array([1, 0, 10, 0, 0, 4])
+      end
+    end
   end
 end
 
