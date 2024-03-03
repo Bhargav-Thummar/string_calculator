@@ -19,9 +19,11 @@ class StringCalculator
     raise NilInputError if args.empty?
 
     result = []
-    negatives_or_alphabets_elements = []
+    negative_elements = []
     regex_for_delimiter = /^\/\/(.|@|#|$|%|;|:|<|>|!)\n.*/
     regex_for_negative_numbers = /-/
+    regex_for_alphabatic_character = /^[A-Za-z]+$/
+    regex_for_special_characters = /[!@#$%^&*().?":;{}|<>]/
 
     args.each do |ele|
 
@@ -39,26 +41,28 @@ class StringCalculator
           .each do |sub_ele|
             if sub_ele.match?(/^((\d+)\n(\d+))$/)
               ele.gsub!("\n", ",")
+
             elsif sub_ele.match?(/(\n)/)
+              # setting this variable because later element should be ignored
               ele = "invalid"
             end
+
             break
           end
+
       else
         ele
       end
 
+      # ignoring this element because it is not valid
       next if ele == "invalid"
 
-      # to raise error for alphabatic charaters
-      raise InvalidInputError if ele.match?(/^[A-Za-z]+$/)
-
-       # to raise error for any special charaters
-       raise InvalidInputError if ele.match?(/[!@#$%^&*().?":;{}|<>]/)
+      # to raise error for alphabatic charaters or any special charaters
+      raise InvalidInputError if (ele.match?(regex_for_alphabatic_character) || ele.match?(regex_for_special_characters))
 
       # to capture negative numbers
       if ele.match?(regex_for_negative_numbers)
-        ele.split(",").each { |sub_ele| negatives_or_alphabets_elements << sub_ele if sub_ele.to_i < 0 }
+        ele.split(",").each { |sub_ele| negative_elements << sub_ele if sub_ele.to_i < 0 }
       end
 
       # resposible for sum of elements
@@ -70,7 +74,7 @@ class StringCalculator
     end
 
     # to raise error for negative numbers
-    raise NegativeNumberError, negatives_or_alphabets_elements unless negatives_or_alphabets_elements.empty?
+    raise NegativeNumberError, negative_elements unless negative_elements.empty?
 
     result
   end
