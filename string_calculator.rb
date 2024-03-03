@@ -18,8 +18,10 @@ class StringCalculator
     raise NilInputError if args.empty?
 
     result = []
+    negatives_or_alphabets_elements = []
     regex_for_delimiter = /^\/\/(.|@|#|$|%|;|:|<|>|!)\n.*/
-    
+    regex_for_negative_numbers = /-/
+
     args.each do |ele|
       if ele.match?(/(\n)/)
         # set delimiter
@@ -45,12 +47,18 @@ class StringCalculator
 
       next if ele == "invalid"
 
+      if ele.match?(regex_for_negative_numbers)
+        ele.split(",").each { |sub_ele| negatives_or_alphabets_elements << sub_ele if sub_ele.to_i < 0 }
+      end
+
       result <<
         ele
         .split(',')
         .map(&:to_i)
         .sum
     end
+
+    raise NegativeNumberError, negatives_or_alphabets_elements unless negatives_or_alphabets_elements.empty?
 
     result
   end
