@@ -51,6 +51,12 @@ describe StringCalculator do
         end
       end
     end
+
+    context '#InvalidInputError' do
+      it 'with alphabates should raise InvalidInputError' do
+        expect { string_calculator.add("1", "a", "-2, -3 ", "", nil, "c, d", "1\n2, 3,4", "-4") }.to raise_error(InvalidInputError)
+      end
+    end
   end
 end
 

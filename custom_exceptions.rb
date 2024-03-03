@@ -10,3 +10,5 @@ class NegativeNumberError < StandardError
   end
 end
 
+class InvalidInputError < StandardError; end
+
