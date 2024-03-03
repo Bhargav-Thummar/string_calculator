@@ -42,6 +42,15 @@ describe StringCalculator do
         expect(string_calculator.add("1", "//!\n1!2!3", "", nil, "1\n2, 3,4", "\n, 1, \n", "//;\n1;2")).to match_array([1, 6, 0, 10, 3])
       end
     end
+
+    context 'with negative numbers' do
+      it 'should raise NegativeNumberError and display message with each negative numbers' do
+        expect { string_calculator.add("1", "-2, -3 ", "", nil, "1\n2, 3,4", "-4") }.to raise_error do |error|
+          expect(error).to be_a(NegativeNumberError)
+          expect(error.message).to eq 'Negative numbers not allowed -2, -3 ,-4.'
+        end
+      end
+    end
   end
 end
 
