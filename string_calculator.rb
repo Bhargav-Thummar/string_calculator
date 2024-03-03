@@ -53,6 +53,9 @@ class StringCalculator
       # to raise error for alphabatic charaters
       raise InvalidInputError if ele.match?(/^[A-Za-z]+$/)
 
+       # to raise error for any special charaters
+       raise InvalidInputError if ele.match?(/[!@#$%^&*().?":;{}|<>]/)
+
       # to capture negative numbers
       if ele.match?(regex_for_negative_numbers)
         ele.split(",").each { |sub_ele| negatives_or_alphabets_elements << sub_ele if sub_ele.to_i < 0 }
